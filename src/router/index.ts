@@ -22,7 +22,7 @@ const router = createRouter({
       path: '/diagnosis',
       name: 'diagnosisList',
       component: () =>
-        import(/* webpackChunkName: "diagnosisList" */ '../components/diagnosis/diagnosisList.vue')
+        import(/* webpackChunkName: "diagnosisList" */ '@/components/diagnosis/diagnosisList.vue')
     },
 
     {
