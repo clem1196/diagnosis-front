@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import diagnosisList from '../components/diagnosis/diagnosisList'
+import diagnosisList from '@/components/diagnosis/diagnosisList.vue'
 </script>
 
 <template>
