@@ -17,16 +17,9 @@
             <!--patient-->
             <div v-if="$route.params.name === undefined" class="col-auto">
               <label for="patient">Paciente</label>
-              <input
-                v-model="dataObject.patient"
-                type="text"
-                class="form-control input-size"
-                id="patient"
-              />
-              <small
-                v-if="fields.validatePatient === '' || fields.validatePatient === 'Opcional'"
-                class="text-alert-optional"
-              >
+              <input v-model="dataObject.patient" type="text" class="form-control input-size" id="patient" />
+              <small v-if="fields.validatePatient === '' || fields.validatePatient === 'Opcional'"
+                class="text-alert-optional">
                 {{ fields.validatePatient }}
               </small>
               <small v-else class="text-alert-error">{{ fields.validatePatient }}</small>
@@ -44,12 +37,7 @@
             <div class="col-auto">
               <label for="test">Test</label>
               <select v-model="dataObject.test" class="form-select select-size" id="test">
-                <option
-                  v-if="$route.params.name !== undefined"
-                  v-for="t in arrayTest.values"
-                  :key="t"
-                  :value="t"
-                >
+                <option v-if="$route.params.name !== undefined" v-for="t in arrayTest.values" :key="t" :value="t">
                   {{ t }}
                 </option>
                 <option v-else v-for="te in arrayTest" :key="te" :value="te">
@@ -60,18 +48,11 @@
             <!--result-->
             <div class="col-auto">
               <label for="result">Result</label>
-              <input
-                @click="_validData"
-                v-model="dataObject.result"
-                type="text"
-                class="form-control input-size"
-                id="result"
-              />
+              <input @click="_validData" v-model="dataObject.result" type="text" class="form-control input-size"
+                id="result" />
 
-              <small
-                v-if="fields.validateResult === '' || fields.validateResult === 'Opcional'"
-                class="text-alert-optional"
-              >
+              <small v-if="fields.validateResult === '' || fields.validateResult === 'Opcional'"
+                class="text-alert-optional">
                 {{ fields.validateResult }}
               </small>
               <small v-else class="text-alert-error">{{ fields.validateResult }}</small>
@@ -87,17 +68,10 @@
             <!--observation-->
             <div class="col-auto">
               <label for="observation">Observación</label>
-              <textarea
-                v-model="dataObject.observation"
-                type="text"
-                class="form-control input-size"
-                id="observation"
-                placeholder=""
-              />
-              <small
-                v-if="dataObject.observation !== null && dataObject.observation.length > 2083"
-                class="text-alert-error"
-              >
+              <textarea v-model="dataObject.observation" type="text" class="form-control input-size" id="observation"
+                placeholder="" />
+              <small v-if="dataObject.observation !== null && dataObject.observation.length > 2083"
+                class="text-alert-error">
                 No se aceptan mas caracteres
               </small>
             </div>
@@ -107,23 +81,17 @@
             <button v-if="$route.params.id !== undefined" type="submit" class="btn btn-save m-2">
               Actualizar
             </button>
-            <button
-              v-else-if="$route.params.name !== undefined"
-              type="submit"
-              class="btn btn-save m-2"
-            >
+            <button v-else-if="$route.params.name !== undefined" type="submit" class="btn btn-save m-2">
               Agregar
             </button>
             <button v-else type="submit" class="btn btn-save m-2">Crear</button>
-            <a v-if="$route.params.name !== undefined" href="/diagnosis" class="btn btn-secondary"
-              >Terminar</a
-            >
+            <RouterLink v-if="$route.params.name !== undefined" to="/diagnosis" class="btn btn-secondary">Terminar
+            </RouterLink>
             <button v-if="$route.params.id !== undefined" @click="returnBack" class="btn btn-light">
               Cancelar
             </button>
-            <a v-if="$route.params.id === undefined" href="/diagnosis" class="btn btn-light"
-              >Cancelar</a
-            >
+            <RouterLink v-if="$route.params.id === undefined" to="/diagnosis" class="btn btn-light">Cancelar
+            </RouterLink>
           </div>
         </form>
 

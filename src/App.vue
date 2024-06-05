@@ -7,7 +7,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <a class="navbar-brand" href="/"><i class="bi-house-fill"></i></a>
+          <RouterLink class="navbar-brand" to="/"><i class="bi-house-fill"></i></RouterLink>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <RouterLink class="nav-link my-focus" id="home" to="/">Home</RouterLink>

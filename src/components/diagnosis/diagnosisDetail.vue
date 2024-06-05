@@ -1,85 +1,58 @@
 <template>
   <div class="container mt-4">
-    <a @click="router.back()" class="col-1 icon-arrow" title="Return"
-      ><i class="bi-arrow-left-square-fill"> </i
-    ></a>
+    <a @click="router.back()" class="col-1 icon-arrow" title="Return"><i class="bi-arrow-left-square-fill"> </i></a>
     <div class="card card-title">{{ title }}</div>
     <ul v-for="diag in diagnosis.values" :key="diag['diagnosis_id']">
-      <li>Test:{{ '  ' + diag['test'] }}</li>
-      <li>Paciente:{{ '  ' + diag['patient'] }}</li>
-      <li>Sex:{{ '  ' + diag['sex'] }}</li>
-      <li>Pi:{{ '  ' + diag['pi'] }}</li>
-      <li>P1:{{ '  ' + diag['p1'] }}</li>
-      <li>P2:{{ '  ' + diag['p2'] }}</li>
-      <li>P3:{{ '  ' + diag['p3'] }}</li>
-      <li>Pf:{{ '  ' + diag['pf'] }}</li>
-      <li>Ideal:{{ '  ' + diag['ideal'] }}</li>
-      <li>Result:{{ '  ' + diag['result'] }}</li>
-      <li>Interpretacion:{{ '  ' + diag['interpretation'] }}</li>
-      <li>Condition:{{ '  ' + diag['condition'] }}</li>
-      <li>Observation:{{ '  ' + diag['observation'] }}</li>
-      <li>Created:{{ '  ' + new Date(diag['created']).toLocaleString('pe-PE') }}</li>
-      <li v-if="diag['updated'] === null">Updated:{{ '  ' + diag['updated'] }}</li>
-      <li v-else>Updated:{{ '  ' + new Date(diag['updated']).toLocaleString('pe-PE') }}</li>
+      <li>Test:{{ ' ' + diag['test'] }}</li>
+      <li>Paciente:{{ ' ' + diag['patient'] }}</li>
+      <li>Sex:{{ ' ' + diag['sex'] }}</li>
+      <li>Pi:{{ ' ' + diag['pi'] }}</li>
+      <li>P1:{{ ' ' + diag['p1'] }}</li>
+      <li>P2:{{ ' ' + diag['p2'] }}</li>
+      <li>P3:{{ ' ' + diag['p3'] }}</li>
+      <li>Pf:{{ ' ' + diag['pf'] }}</li>
+      <li>Ideal:{{ ' ' + diag['ideal'] }}</li>
+      <li>Result:{{ ' ' + diag['result'] }}</li>
+      <li>Interpretacion:{{ ' ' + diag['interpretation'] }}</li>
+      <li>Condition:{{ ' ' + diag['condition'] }}</li>
+      <li>Observation:{{ ' ' + diag['observation'] }}</li>
+      <li>Created:{{ ' ' + new Date(diag['created']).toLocaleString('pe-PE') }}</li>
+      <li v-if="diag['updated'] === null">Updated:{{ ' ' + diag['updated'] }}</li>
+      <li v-else>Updated:{{ ' ' + new Date(diag['updated']).toLocaleString('pe-PE') }}</li>
       <div>
         <div class="card card-title">Receta y/o recomendación</div>
         <!-- Button trigger modal -->
-        <button
-          type="button"
-          class="btn btn-sm btn-save mt-2"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-        >
+        <button type="button" class="btn btn-sm btn-save mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
           Editar
         </button>
         <!-- Modal -->
-        <div
-          class="modal fade"
-          id="staticBackdrop"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-        >
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar tratamiento</h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <form @submit.prevent="_editTreatment" @keyup="_validData">
                   <!--treatment-->
                   <div class="col-auto">
-                    <textarea
-                      v-model="dataObject.treatment"
-                      type="textarea"
-                      class="form-control input-size"
-                      id="observation"
-                      placeholder=""
-                    />
+                    <textarea v-model="dataObject.treatment" type="textarea" class="form-control input-size"
+                      id="observation" placeholder="" />
                     <small>{{
                       dataObject.treatment.length + ' ' + 'de' + ' ' + 2083 + ' ' + 'caracteres'
-                    }}</small>
-                    <small
-                      v-if="
-                        fields.validateTreatment === '' || fields.validateTreatment === 'Opcional'
-                      "
-                      class="text-alert-optional"
-                    >
+                      }}</small>
+                    <small v-if="
+                      fields.validateTreatment === '' || fields.validateTreatment === 'Opcional'
+                    " class="text-alert-optional">
                       {{ fields.validateTreatment }}
                     </small>
                     <small v-else class="text-alert-error">{{ fields.validateTreatment }}</small>
                   </div>
                   <div class="modal-footer">
                     <button type="submit" class="btn btn-save m-2">Actualizar</button>
-                    <a href="" class="btn btn-light">Cancelar</a>
+                    <a href="#" class="btn btn-light">Cancelar</a>
                   </div>
                 </form>
                 <p v-if="message.success.length > 0" class="alert alert-success mt-2" role="alert">
@@ -95,7 +68,7 @@
             </div>
           </div>
         </div>
-        <div class="container mt-4">{{ '  ' + diag['treatment'] }}</div>
+        <div class="container mt-4">{{ ' ' + diag['treatment'] }}</div>
       </div>
     </ul>
   </div>
