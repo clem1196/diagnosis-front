@@ -42,7 +42,7 @@
                       id="observation" placeholder="" />
                     <small>{{
                       dataObject.treatment.length + ' ' + 'de' + ' ' + 2083 + ' ' + 'caracteres'
-                      }}</small>
+                    }}</small>
                     <small v-if="
                       fields.validateTreatment === '' || fields.validateTreatment === 'Opcional'
                     " class="text-alert-optional">
@@ -78,7 +78,7 @@
 import { onMounted, reactive } from 'vue'
 import type { _diagnosis } from '../../interfaces/interface'
 import { useRoute } from 'vue-router'
-import { editDiagnosis, getDiag, getDiagnosis } from '@/data/diagnosis'
+import { editDiagnosis, getDiag } from '@/data/diagnosis'
 import router from '@/router'
 import { fieldTreatment } from '@/validation/diagnosis'
 
