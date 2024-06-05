@@ -1,87 +1,67 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <div class="wrapper">
-      <HelloWorld msg="My Aplication!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/diagnosis">Diagnosis</RouterLink>
-        <RouterLink to="/diagnosis/claudio">Detalles</RouterLink>
-      </nav>
-    </div>
-  </header>
   <div>
-    <RouterView></RouterView>
+    <nav class="navbar navbar-expand-lg navbar-dark success">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <a class="navbar-brand" href="/"><i class="bi-house-fill"></i></a>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <RouterLink to="/">Home</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink to="/about">About</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink to="/diagnosis">Diagnosis</RouterLink>
+            </li>
+          </ul>
+          <div v-if="loggedIn == true" class="d-flex myFlex">
+            <ul class="navbar-nav">
+              <span class="welcome">{{ email }}</span>
+              <li class="nav-item dropdown">
+                <a href="/login" class="welcome change" title="Options" data-bs-toggle="dropdown" aria-expanded="false">
+                  <!--<img src="./assets/user.png" height="40" width="35" style="border-radius: 50%" />-->
+
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg-end mt-3">
+                  <li>
+                    <a class="dropdown-item" href="/logout"><i class="bi-row"></i>Log out</a>
+                  </li>
+                  <li><a class="dropdown-item" href="/login">Another account</a></li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>
+                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div v-else class="d-flex myFlex">
+            <ul class="navbar-nav">
+              <a href="/login"></a>
+              <a class="navbar-brand" href="/login" type="button">
+                <i class="bi-power"></i>Log in
+              </a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <RouterView />
   </div>
 </template>
+<script setup lang="ts">
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+import { onMounted, ref } from 'vue'
+//const route = useRoute()
+let loggedIn = ref(false)
+let email = ref('')
+onMounted(async () => {
+})
+</script>
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    margin-top: 6px;
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
+<style></style>
