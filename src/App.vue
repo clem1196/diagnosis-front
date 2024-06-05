@@ -10,42 +10,47 @@
           <a class="navbar-brand" href="/"><i class="bi-house-fill"></i></a>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <RouterLink to="/">Home</RouterLink>
+              <RouterLink class="nav-link my-focus" id="home" to="/">Home</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink to="/about">About</RouterLink>
+              <RouterLink class="nav-link my-focus" id="about" to="/about">About</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink to="/diagnosis">Diagnosis</RouterLink>
+              <RouterLink class="nav-link my-focus" id="modules" to="/diagnosis">diagnosis</RouterLink>
             </li>
           </ul>
           <div v-if="loggedIn == true" class="d-flex myFlex">
             <ul class="navbar-nav">
               <span class="welcome">{{ email }}</span>
               <li class="nav-item dropdown">
-                <a href="/login" class="welcome change" title="Options" data-bs-toggle="dropdown" aria-expanded="false">
+                <RouterLink to="/login" class="welcome change" title="Options" data-bs-toggle="dropdown"
+                  aria-expanded="false">
                   <!--<img src="./assets/user.png" height="40" width="35" style="border-radius: 50%" />-->
 
-                </a>
+                </RouterLink>
                 <ul class="dropdown-menu dropdown-menu-lg-end mt-3">
                   <li>
-                    <a class="dropdown-item" href="/logout"><i class="bi-row"></i>Log out</a>
+                    <RouterLink class="dropdown-item" to="/logout"><i class="bi-row"></i>Log out</RouterLink>
                   </li>
-                  <li><a class="dropdown-item" href="/login">Another account</a></li>
+                  <li>
+                    <RouterLink class="dropdown-item" to="/login">Another account</RouterLink>
+                  </li>
                   <li>
                     <hr class="dropdown-divider" />
                   </li>
-                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  <li>
+                    <RouterLink class="dropdown-item" to="#">Profile</RouterLink>
+                  </li>
                 </ul>
               </li>
             </ul>
           </div>
           <div v-else class="d-flex myFlex">
             <ul class="navbar-nav">
-              <a href="/login"></a>
-              <a class="navbar-brand" href="/login" type="button">
+              <RouterLink to="/login"></RouterLink>
+              <RouterLink class="navbar-brand" to="/login" type="button">
                 <i class="bi-power"></i>Log in
-              </a>
+              </RouterLink>
             </ul>
           </div>
         </div>
@@ -57,6 +62,7 @@
 <script setup lang="ts">
 
 import { onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router';
 //const route = useRoute()
 let loggedIn = ref(false)
 let email = ref('')
