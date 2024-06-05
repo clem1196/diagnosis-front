@@ -11,13 +11,8 @@
             <div class="row align-search">
               <div class="col-auto">
                 <i class="bi-search"></i>
-                <input
-                  v-model="text"
-                  type="search"
-                  id="inputMode1"
-                  name="inputMode1"
-                  class="form-control form-control-sm search"
-                />
+                <input v-model="text" type="search" id="inputMode1" name="inputMode1"
+                  class="form-control form-control-sm search" />
               </div>
             </div>
           </form>
@@ -32,15 +27,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="search in searchDiagnosis.values"
-              :key="search['diagnosis_id']"
-              class="tbody-tr"
-            >
+            <tr v-for="search in searchDiagnosis.values" :key="search['diagnosis_id']" class="tbody-tr">
               <td>
-                <a class="td-decoration" :href="'/diagnosis/' + search['patient']" title="Detail">
+                <RouterLink class="td-decoration" :to="'/diagnosis/' + search['patient']" title="Detail">
                   {{ search['patient'] }}
-                </a>
+                </RouterLink>
               </td>
             </tr>
           </tbody>
