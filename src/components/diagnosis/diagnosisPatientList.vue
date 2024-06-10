@@ -7,12 +7,29 @@
       <div class="card card-search">
         <div class="row row-search">
           <!--Search mode 1-->
-          <form v-if="filter == true" @keyup="getSearchDiagnosis">
+          <!--<form v-if="filter == true" @keyup="getSearchDiagnosis">
             <div class="row align-search">
               <div class="col-auto">
                 <i class="bi-search"></i>
                 <input v-model="text" type="search" id="inputMode1" name="inputMode1"
                   class="form-control form-control-sm search" />
+              </div>
+            </div>
+          </form>-->
+          <!--search mode 2-->
+          <form @submit.prevent="getSearchDiagnosis">
+            <div class="row align-search">
+              <div class="col-auto">
+                <button v-if="success.length > 0 || err.length > 0" @click="getDataPages(1)" type="button"
+                  class="btn-form cancel">
+                  Salir
+                </button>
+                <button v-else disabled type="button" class="btn-form">Salir</button>
+                <button type="submit" class="btn-form">Search</button>
+              </div>
+              <div class="col-auto mt-1">
+                <i class="bi-search"></i>
+                <input v-model="text" id="inputMode2" name="inputMode2" class="form-control form-control-sm search" />
               </div>
             </div>
           </form>
@@ -28,9 +45,8 @@
           </thead>
           <tbody>
             <tr v-for="search in searchDiagnosis.values" :key="search['diagnosis_id']" class="tbody-tr">
-              <td>
-                <RouterLink class="td-decoration" :to="'/diagnosis/' + search['patient']" title="Detail"
-                  @click="clearText">
+              <td @click="clearRecords">
+                <RouterLink class="td-decoration" :to="'/diagnosis/' + search['patient']" title="Detail">
                   {{ search['patient'] }}
                 </RouterLink>
               </td>
@@ -48,21 +64,11 @@
 import { onMounted, reactive, ref } from 'vue'
 import type { _diagnosis } from '../../interfaces/interface'
 import { getDiagnosis } from '@/data/diagnosis'
+import { useRoute } from 'vue-router';
 defineProps({
   title: { type: String, default: 'Pacientes' }
 })
-onMounted(async () => {
-  const diagnosisData = await getDiagnosis()
-  if (diagnosisData?.statusText == 'OK') {
-    //patients
-    console.log(diagnosisData.data.patients)
-    diagnosis.values = diagnosisData.data.patients
-  }
-  console.log(diagnosis.values)
-  if (diagnosis.length > 0) {
-    getDataPages(currentPage.value)
-  }
-})
+const route = useRoute()
 
 //LIST
 /*======================================================================*/
@@ -72,22 +78,32 @@ const currentPage = ref(1)
 const rows = ref()
 const pagination = ref(true)
 //search
-const filter = ref(true)
 let searchDiagnosis: Array<_diagnosis> = reactive([])
 const text = ref('')
 //Messages
 const err = ref('')
 const success = ref('')
+onMounted(async () => {
+  const diagnosisData = await getDiagnosis()
+  if (diagnosisData?.statusText == 'OK') {
+    //patients   
+    diagnosis.values = diagnosisData.data.patients
+  }
+  if (diagnosis.values.length > 0) {
+    getDataPages(currentPage.value)
+  }
+})
 
-const clearText = () => {
-  return text.value = ''
+//clear Results
+const clearRecords = () => {
+  getDataPages(1)
+  location.replace(`/diagnosis/${route.params.name}`)
+
 }
-
 //search
 const getSearchDiagnosis = () => {
-  console.log(diagnosis.values)
   if (diagnosis.values.length > 0) {
-    if (text.value.length == 0) {
+    if (text.value.length === 0) {
       getDataPages(1)
     } else {
       const filterItems = (query: string) => {

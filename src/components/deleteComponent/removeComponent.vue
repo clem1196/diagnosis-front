@@ -1,8 +1,20 @@
 <template>
   <div>
-    <button id="delete" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="@mdo"
-      hidden></button>
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <button
+      id="delete"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#deleteModal"
+      data-bs-whatever="@mdo"
+      hidden
+    ></button>
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

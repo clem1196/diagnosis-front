@@ -25,7 +25,7 @@ export const fieldPatient = async (patient: undefined | string) => {
       )
       console.log(await diagnosisField, myId)
     }
-    console.log(await diagnosisField, myId)
+    //console.log(await diagnosisField, myId)
     if ((await diagnosisField.length) > 0) {
       return 'Este nombre o DNI ya existe '
     } else {

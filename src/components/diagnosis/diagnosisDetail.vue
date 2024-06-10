@@ -1,6 +1,8 @@
 <template>
   <div class="container mt-4">
-    <a @click="router.back()" class="col-1 icon-arrow" title="Return"><i class="bi-arrow-left-square-fill"> </i></a>
+    <a @click="router.back()" class="col-1 icon-arrow" title="Return"
+      ><i class="bi-arrow-left-square-fill"> </i
+    ></a>
     <div class="card card-title">{{ title }}</div>
     <ul v-for="diag in diagnosis.values" :key="diag['diagnosis_id']">
       <li>Test:{{ ' ' + diag['test'] }}</li>
@@ -22,30 +24,55 @@
       <div>
         <div class="card card-title">Receta y/o recomendación</div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-sm btn-save mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button
+          type="button"
+          class="btn btn-sm btn-save mt-2"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
           Editar
         </button>
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div
+          class="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar tratamiento</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
               </div>
               <div class="modal-body">
                 <form @submit.prevent="_editTreatment" @keyup="_validData">
                   <!--treatment-->
                   <div class="col-auto">
-                    <textarea v-model="dataObject.treatment" type="textarea" class="form-control input-size"
-                      id="observation" placeholder="" />
+                    <textarea
+                      v-model="dataObject.treatment"
+                      type="textarea"
+                      class="form-control input-size"
+                      id="observation"
+                      placeholder=""
+                    />
                     <small>{{
                       dataObject.treatment.length + ' ' + 'de' + ' ' + 2083 + ' ' + 'caracteres'
                     }}</small>
-                    <small v-if="
-                      fields.validateTreatment === '' || fields.validateTreatment === 'Opcional'
-                    " class="text-alert-optional">
+                    <small
+                      v-if="
+                        fields.validateTreatment === '' || fields.validateTreatment === 'Opcional'
+                      "
+                      class="text-alert-optional"
+                    >
                       {{ fields.validateTreatment }}
                     </small>
                     <small v-else class="text-alert-error">{{ fields.validateTreatment }}</small>

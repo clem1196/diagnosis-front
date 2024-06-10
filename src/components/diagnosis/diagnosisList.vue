@@ -6,7 +6,7 @@
       <div class="col-3">
         <div v-if="loading" class="loading">Loading...</div>
 
-        <div v-if="err" class="error">{{ err }}</div>
+        <div v-if="message.err" class="error">{{ message.err }}</div>
         <!--form-->
         <diagnosisPatientList></diagnosisPatientList>
         <form @submit.prevent="add_edit_Diagnosis" @keyup="_validData">
@@ -116,7 +116,7 @@
         </p>
         <!--Detail for patient-->
         <diagnosisPatientDetail v-if="$route.params.name !== undefined"></diagnosisPatientDetail>
-        <diagnosisGraphics v-if="$route.params.name != undefined"></diagnosisGraphics>
+        <diagnosisGraphics v-if="$route.params.name !== undefined"></diagnosisGraphics>
       </div>
     </div>
     <!--LIST for details-->
@@ -128,14 +128,12 @@ import diagnosisGraphics from '@/components/diagnosis/diagnosisGraphics.vue'
 import { getDiagnosis, addDiagnosis, editDiagnosis, getDiag } from '@/data/diagnosis'
 import diagnosisPatientDetail from '@/components/diagnosis/diagnosisPatientDetail.vue'
 import diagnosisPatientList from '@/components/diagnosis/diagnosisPatientList.vue'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import type { _diagnosis } from '@/interfaces/interface'
 import { useRoute } from 'vue-router'
 import router from '@/router'
 import { fieldPatient, fieldResult } from '@/validation/diagnosis'
 
-const route: any = useRoute()
-const diagnosisOne: Array<_diagnosis> = reactive([])
 let arrayTest = reactive([
   'LDH/DHL',
   'GLUCOSA',
@@ -151,15 +149,16 @@ let arrayTest = reactive([
   'ACIDO URICO',
   'HEMOGLOBINA'
 ])
-
-onMounted(async () => {
-  await _getDiagnosis()
-  _validData()
-  getDataPages(currentPage.value)
-})
-
-//ADD and EDIT
-/*======================================================================*/
+const route: any = useRoute()
+const diagnosisOne: Array<_diagnosis> = reactive([])
+const diagnosis: Array<_diagnosis> = reactive([])
+//pagination
+const currentPage = ref(1)
+const rows = ref(3)
+const pagination = ref(true)
+//search
+let searchDiagnosis: Array<_diagnosis> = reactive([])
+const text = ref('')
 //Original data
 const dataObject = reactive({
   patient: '',
@@ -182,63 +181,15 @@ const message = reactive({
   warning: '',
   err: ''
 })
-const _validData = async () => {
-  fields.validatePatient = await fieldPatient(dataObject.patient)
-  fields.validateResult = await fieldResult(dataObject.result)
-}
-const add_edit_Diagnosis = async () => {
-  try {
-    if (route.params.id === undefined && route.params.name === undefined) {
-      loading.value = true
-      let res = await addDiagnosis(dataObject)
-      if (res?.statusText === 'Created') {
-        message.success = res.data.Message
-        message.err = ''
-        loading.value = false
-        location.replace(`/diagnosis/${res.data.results.patient}`)
-        //router.back()
-      }
-    } else if (route.params.name !== undefined) {
-      let res = await addDiagnosis(dataObject)
-      if (res?.statusText === 'Created') {
-        message.success = res.data.Message
-        setTimeout(() => {
-          message.success = ''
-        }, 1500)
-        message.err = ''
-        location.replace('/diagnosis/' + route.params.name)
-      }
-    } else {
-      let res = await editDiagnosis(route.params.id, dataObject)
-      if (res?.statusText === 'Created') {
-        message.success = res.data.Message
-        message.err = ''
-        router.back()
-      } else {
-        console.log('no hubo cambios')
-        message.warning = 'Modifique algo o presione cancelar'
-      }
-    }
-  } catch (error: any | undefined) {
-    message.success = ''
-    message.err = error.response.data.Message
-    console.log(error.response.data.Message)
-  }
-}
+onMounted(async () => {
+  await _getDiagnosis()
+  _validData()
+  getDataPages(currentPage.value)
+
+})
 
 //LIST
 /*======================================================================*/
-const diagnosis: Array<_diagnosis> = reactive([])
-//pagination
-const currentPage = ref(1)
-const rows = ref(3)
-const pagination = ref(true)
-//search
-let searchDiagnosis: Array<_diagnosis> = reactive([])
-const text = ref('')
-//Messages
-const err = ref('')
-const success = ref('')
 
 const _getDiagnosis = async () => {
   //console.log(route.params.name);
@@ -300,13 +251,58 @@ const _getDiagnosis = async () => {
     }
   }
 }
+//ADD and EDIT
+/*======================================================================*/
+
+const _validData = async () => {
+  fields.validatePatient = await fieldPatient(dataObject.patient)
+  fields.validateResult = await fieldResult(dataObject.result)
+}
+const add_edit_Diagnosis = async () => {
+  try {
+    if (route.params.id === undefined && route.params.name === undefined) {
+      let res = await addDiagnosis(dataObject)
+      if (res?.statusText === 'Created') {
+        message.success = res.data.Message
+        message.err = ''
+        location.replace(`/diagnosis/${res.data.results.patient}`)
+        //router.back()
+      }
+    } else if (route.params.name !== undefined) {
+      let res = await addDiagnosis(dataObject)
+      if (res?.statusText === 'Created') {
+        message.success = res.data.Message
+        setTimeout(() => {
+          message.success = ''
+        }, 1500)
+        message.err = ''
+        location.replace('/diagnosis/' + route.params.name)
+      }
+    } else {
+      let res = await editDiagnosis(route.params.id, dataObject)
+      if (res?.statusText === 'Created') {
+        message.success = res.data.Message
+        message.err = ''
+        router.back()
+      } else {
+        console.log('no hubo cambios')
+        message.warning = 'Modifique algo o presione cancelar'
+      }
+    }
+  } catch (error: any | undefined) {
+    message.success = ''
+    message.err = error.response.data.Message
+    console.log(error.response.data.Message)
+  }
+}
+
 //get number of pages
 const getDataPages = async (numPage: number) => {
   let arrayEmpty: _diagnosis[] = []
   searchDiagnosis.values = arrayEmpty.values
   text.value = ''
-  err.value = ''
-  success.value = ''
+  message.err = ''
+  message.success = ''
   pagination.value = true
   currentPage.value = numPage
   if (searchDiagnosis.values.length > 0) {

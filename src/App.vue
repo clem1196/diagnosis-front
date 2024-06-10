@@ -2,8 +2,15 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark success">
       <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-          aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
@@ -16,21 +23,29 @@
               <RouterLink class="nav-link my-focus" id="about" to="/about">About</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link my-focus" id="modules" to="/diagnosis">diagnosis</RouterLink>
+              <RouterLink class="nav-link my-focus" id="modules" to="/diagnosis"
+                >diagnosis</RouterLink
+              >
             </li>
           </ul>
           <div v-if="loggedIn == true" class="d-flex myFlex">
             <ul class="navbar-nav">
               <span class="welcome">{{ email }}</span>
               <li class="nav-item dropdown">
-                <RouterLink to="/login" class="welcome change" title="Options" data-bs-toggle="dropdown"
-                  aria-expanded="false">
+                <RouterLink
+                  to="/login"
+                  class="welcome change"
+                  title="Options"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
                   <!--<img src="./assets/user.png" height="40" width="35" style="border-radius: 50%" />-->
-
                 </RouterLink>
                 <ul class="dropdown-menu dropdown-menu-lg-end mt-3">
                   <li>
-                    <RouterLink class="dropdown-item" to="/logout"><i class="bi-row"></i>Log out</RouterLink>
+                    <RouterLink class="dropdown-item" to="/logout"
+                      ><i class="bi-row"></i>Log out</RouterLink
+                    >
                   </li>
                   <li>
                     <RouterLink class="dropdown-item" to="/login">Another account</RouterLink>
@@ -60,14 +75,12 @@
   </div>
 </template>
 <script setup lang="ts">
-
 import { onMounted, ref } from 'vue'
-import { RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router'
 //const route = useRoute()
 let loggedIn = ref(false)
 let email = ref('')
-onMounted(async () => {
-})
+onMounted(async () => {})
 </script>
 
 <style></style>

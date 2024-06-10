@@ -11,46 +11,15 @@
       <!--Form-->
       <div class="card card-search">
         <div class="row row-search">
-          <!--Add-->
-          <RouterLink :to="'/diagnosis/' + $route.params.name" class="col-1 icon-add" title="Add diagnosis"><i
-              class="bi-person-fill-add"> </i></RouterLink>
-          <!--Switch-->
-          <div class="col-auto">
-            <div class="form-switch form-check" title="Clasic mode">
-              <label class="form-check-label" for="switDiagnosisPatient"></label>
-              <input @click="changeFilter" type="checkbox" name="inputNameSwitch" class="form-check-input myCheck"
-                id="switDiagnosisPatient" />
-            </div>
-          </div>
           <!--Search-->
           <div class="col-auto">
             <!--Search mode 1-->
-            <form v-if="filter == true" @keyup="getSearchDiagnosis">
+            <form @keyup="getSearchDiagnosis">
               <div class="row m-2">
                 <div class="col-auto">
                   <i class="bi-search"></i>
                   <input v-model="text" type="search" id="inputMode1" name="inputMode1"
                     class="form-control form-control-sm search" />
-                </div>
-              </div>
-            </form>
-            <!--search mode 2-->
-            <form v-else @submit.prevent="getSearchDiagnosis">
-              <div class="row">
-                <div class="col-auto">
-                  <button type="submit" class="btn-form">Search</button>
-                </div>
-                <div class="col-auto">
-                  <button v-if="success.length > 0 || err.length > 0" @click="getDataPages(1)" type="button"
-                    class="btn-form cancel">
-                    Exit
-                  </button>
-                  <button v-else disabled type="button" class="btn-form">Exit</button>
-                </div>
-                <div class="col-auto mt-1">
-                  <i class="bi-search"></i>
-                  <input v-model="text" id="inputMode2" name="inputMode2" class="form-control form-control-sm search"
-                    type="search" />
                 </div>
               </div>
             </form>
@@ -199,6 +168,19 @@ defineProps({
   title: { type: String, default: 'Detalles' }
 })
 
+const diagnosis: Array<_diagnosis> = reactive([])
+//pagination
+const currentPage = ref(1)
+const rows = ref(3)
+const pagination = ref(true)
+//search
+let searchDiagnosis: Array<_diagnosis> = reactive([])
+const text = ref('')
+//Messages
+const err = ref('')
+const success = ref('')
+const sortValue = ref(false)
+
 onMounted(async () => {
   if (route.params.name !== undefined) {
     const diagnosisData = await getDiagnosis()
@@ -210,28 +192,11 @@ onMounted(async () => {
       )
       diagnosis.values = diagnosisByPatientData
     }
-    console.log(diagnosis)
-    getDataPages(currentPage.value)
-    color_td()
+    console.log(diagnosis.values)
+    await getDataPages(currentPage.value)
+    await color_td()
   }
 })
-
-//LIST
-/*======================================================================*/
-const diagnosis: Array<_diagnosis> = reactive([])
-//pagination
-const currentPage = ref(1)
-const rows = ref(3)
-const pagination = ref(true)
-//search
-const filter = ref(true)
-let searchDiagnosis: Array<_diagnosis> = reactive([])
-const text = ref('')
-//Messages
-const err = ref('')
-const success = ref('')
-const sortValue = ref(false)
-
 const color_td = async () => {
   let myColor: HTMLCollection = await document.getElementsByClassName('color-td')
 
@@ -266,7 +231,7 @@ const color_td = async () => {
     }
   }
 
-  console.log(typeof myColor[6].textContent)
+
 }
 
 //print
@@ -437,14 +402,7 @@ const getSearchDiagnosis = () => {
     }
   }
 }
-//Switch
-const changeFilter = () => {
-  if (filter.value == true) {
-    filter.value = false
-  } else {
-    filter.value = true
-  }
-}
+
 //pagination
 const isActive = (numPage: number) => {
   return numPage == currentPage.value ? 'active' : ''

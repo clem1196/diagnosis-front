@@ -231,7 +231,7 @@ body {
 .row.align-search {
   margin: 0.5rem;
   display: flex;
-  justify-content: center;
+  justify-content: right;
 }
 
 .col-auto {
@@ -264,24 +264,24 @@ body {
 }
 
 .btn-form {
-  color: #018f60;
-  border-radius: 0.25rem;
-  background-color: #dffdf3;
+  color: white;
+  background-color: #06e0b5;
+  border-radius: 0.5rem;
   font-size: 0.85rem;
   display: inline-block;
   line-height: 1.5;
   text-align: center;
-  vertical-align: middle;
   cursor: pointer;
   border: 1px solid transparent;
   padding: 0.3rem 0.7rem;
-  padding-top: 6px;
+  padding-top: 4px;
+
   margin: 3px;
 }
 
 .btn-form:hover {
-  color: #01875a;
-  background-color: #a5fade;
+  color: white;
+  background-color: #05c39d;
 }
 
 .btn-form.cancel {
@@ -296,7 +296,7 @@ body {
 }
 
 .btn-form:disabled {
-  color: #dcebe6;
+  color: #d4d6d6;
   background-color: transparent;
   text-decoration: none;
   cursor: auto;
