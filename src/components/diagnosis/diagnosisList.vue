@@ -89,8 +89,8 @@
             </button>
             <button v-else type="submit" class="btn btn-save m-2">Crear</button>
 
-            <a v-if="$route.params.name !== undefined" href="/diagnosis" class="btn btn-secondary">Terminar
-            </a>
+            <RouterLink v-if="$route.params.name !== undefined" to="/diagnosis" class="btn btn-secondary">Terminar
+            </RouterLink>
             <button v-if="$route.params.id !== undefined" @click="router.back()" class="btn btn-light">
               Cancelar
             </button>
