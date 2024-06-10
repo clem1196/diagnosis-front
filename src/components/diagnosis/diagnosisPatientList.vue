@@ -29,9 +29,10 @@
           <tbody>
             <tr v-for="search in searchDiagnosis.values" :key="search['diagnosis_id']" class="tbody-tr">
               <td>
-                <a class="td-decoration" :href="'/diagnosis/' + search['patient']" title="Detail" @click="clearText">
+                <RouterLink class="td-decoration" :to="'/diagnosis/' + search['patient']" title="Detail"
+                  @click="clearText">
                   {{ search['patient'] }}
-                </a>
+                </RouterLink>
               </td>
             </tr>
           </tbody>
