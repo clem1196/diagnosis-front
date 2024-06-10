@@ -4,6 +4,9 @@
     <!--FORM ADD EDIT, list diagnosis-->
     <div class="row m-1">
       <div class="col-3">
+        <div v-if="loading" class="loading">Loading...</div>
+
+        <div v-if="err" class="error">{{ err }}</div>
         <!--form-->
         <diagnosisPatientList></diagnosisPatientList>
         <form @submit.prevent="add_edit_Diagnosis" @keyup="_validData">
@@ -85,12 +88,14 @@
               Agregar
             </button>
             <button v-else type="submit" class="btn btn-save m-2">Crear</button>
-            <RouterLink v-if="$route.params.name !== undefined" to="/diagnosis" class="btn btn-secondary">Terminar
-            </RouterLink>
-            <button v-if="$route.params.id !== undefined" @click="returnBack" class="btn btn-light">
+
+            <a v-if="$route.params.name !== undefined" href="/diagnosis" class="btn btn-secondary">Terminar
+            </a>
+            <button v-if="$route.params.id !== undefined" @click="router.back()" class="btn btn-light">
               Cancelar
             </button>
-            <RouterLink v-if="$route.params.id === undefined" to="/diagnosis" class="btn btn-light">Cancelar
+            <RouterLink v-if="$route.params.id === undefined && $route.params.name === undefined" to="/diagnosis"
+              class="btn btn-light">Cancelar
             </RouterLink>
           </div>
         </form>
@@ -123,7 +128,7 @@ import diagnosisGraphics from '@/components/diagnosis/diagnosisGraphics.vue'
 import { getDiagnosis, addDiagnosis, editDiagnosis, getDiag } from '@/data/diagnosis'
 import diagnosisPatientDetail from '@/components/diagnosis/diagnosisPatientDetail.vue'
 import diagnosisPatientList from '@/components/diagnosis/diagnosisPatientList.vue'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import type { _diagnosis } from '@/interfaces/interface'
 import { useRoute } from 'vue-router'
 import router from '@/router'
@@ -171,6 +176,7 @@ const fields = reactive({
   validateResult: ''
 })
 //server or catch messages
+const loading = ref(false)
 const message = reactive({
   success: '',
   warning: '',
@@ -183,11 +189,12 @@ const _validData = async () => {
 const add_edit_Diagnosis = async () => {
   try {
     if (route.params.id === undefined && route.params.name === undefined) {
+      loading.value = true
       let res = await addDiagnosis(dataObject)
       if (res?.statusText === 'Created') {
         message.success = res.data.Message
         message.err = ''
-        console.log(res.data.results.patient)
+        loading.value = false
         location.replace(`/diagnosis/${res.data.results.patient}`)
         //router.back()
       }
@@ -292,9 +299,6 @@ const _getDiagnosis = async () => {
       }, 5000)
     }
   }
-}
-const returnBack = () => {
-  router.back()
 }
 //get number of pages
 const getDataPages = async (numPage: number) => {

@@ -29,9 +29,9 @@
           <tbody>
             <tr v-for="search in searchDiagnosis.values" :key="search['diagnosis_id']" class="tbody-tr">
               <td>
-                <RouterLink class="td-decoration" :to="'/diagnosis/' + search['patient']" title="Detail">
+                <a class="td-decoration" :href="'/diagnosis/' + search['patient']" title="Detail" @click="clearText">
                   {{ search['patient'] }}
-                </RouterLink>
+                </a>
               </td>
             </tr>
           </tbody>
@@ -78,11 +78,15 @@ const text = ref('')
 const err = ref('')
 const success = ref('')
 
+const clearText = () => {
+  return text.value = ''
+}
+
 //search
 const getSearchDiagnosis = () => {
   console.log(diagnosis.values)
   if (diagnosis.values.length > 0) {
-    if (text.value.length == 0 && diagnosis.values.length > 0) {
+    if (text.value.length == 0) {
       getDataPages(1)
     } else {
       const filterItems = (query: string) => {

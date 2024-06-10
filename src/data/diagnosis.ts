@@ -8,6 +8,7 @@ export const getDiagnosis = async () => {
     /*url: "http://localhost:3000/diagnosis/"*/ //para desarrollo locl
     url: `${urlServer}/diagnosis` /*url para la nube*/
   })
+
   return result
 }
 export const getDiag = async (id: number) => {
